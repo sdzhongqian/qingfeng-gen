@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wdata.system.dao.LoginDao">
+
+
+	<!--查询详情-->
+	<select id="findUserInfo" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.login_name as "login_name",
+			a.login_password as "login_password",
+			a.nickname as "nickname",
+			a.sex as "sex",
+			a.email as "email",
+			a.phone as "phone",
+			a.birth_date as "birth_date",
+			a.live_address as "live_address",
+			a.birth_address as "birth_address",
+			a.head_address as "head_address",
+			a.type as "type",
+			a.order_by as "order_by",
+			a.status as "status",
+			a.organize_id as "organize_id",
+			a.open_id as "open_id",
+			a.qywx_account as "qywx_account",
+			a.fg_leader as "fg_leader",
+			a.bm_leader as "bm_leader",
+			a.sj_leader as "sj_leader",
+			a.remark as "remark",
+			a.create_time as "create_time",
+			a.update_time as "update_time",
+			b.organize_id as "organize_id",
+			b.jz_organize_id as "jz_organize_id",
+			c.name as "organize_name",
+			d.name as "jz_organize_name",
+			c.org_cascade as "org_cascade",
+			d.org_cascade as "jz_org_cascade"
+			from system_user as a
+			left join system_user_organize b on a.id=b.user_id
+			left join system_organize c on b.organize_id=c.id
+			left join system_organize d on b.jz_organize_id=d.id
+			where 1=1
+			<if test="login_name != null and login_name != ''">
+				and  a.login_name = #{login_name}
+			</if>
+			<if test="qywx_account != null and qywx_account != ''">
+				and  a.qywx_account = #{qywx_account}
+			</if>
+			limit 0,1
+	</select>
+
+
+</mapper>

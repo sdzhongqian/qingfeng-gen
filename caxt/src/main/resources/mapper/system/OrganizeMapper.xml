@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wdata.system.dao.OrganizeDao">
+
+
+	<!--查询分页列表-->
+	<select id="findListPage" parameterType="com.wdata.base.util.Page" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.org_cascade as "org_cascade",
+			a.name as "name",
+			a.short_name as "short_name",
+			a.type as "type",
+			a.parent_id as "parent_id",
+			a.order_by as "order_by",
+			a.level as "level",
+			a.code as "code",
+			a.parent_code as "parent_code",
+			a.fg_leader as "fg_leader",
+			a.bm_leader as "bm_leader",
+			a.sj_leader as "sj_leader",
+			a.remark as "remark",
+			a.create_time as "create_time",
+			a.update_time as "update_time"
+			from system_organize as a
+			where 1=1
+			<if test="pd.org_cascade != null and pd.org_cascade != ''">
+				and a.org_cascade like concat('%', #{pd.org_cascade},'%')
+			</if>
+			<if test="pd.name != null and pd.name != ''">
+				and a.name like concat('%', #{pd.name},'%')
+			</if>
+			<if test="pd.short_name != null and pd.short_name != ''">
+				and a.short_name like concat('%', #{pd.short_name},'%')
+			</if>
+			<if test="pd.type != null and pd.type != ''"><!-- 类型 -->
+				and a.type = #{pd.type}
+			</if>
+			<if test="pd.parent_id != null and pd.parent_id != ''">
+				and a.parent_id = #{pd.parent_id}
+			</if>
+			<if test="pd.parent_code != null and pd.parent_code != ''">
+				and a.parent_code = #{pd.parent_code}
+			</if>
+			<!-- 数据权限 -->
+			<if test="pd.create_user != null and pd.create_user != ''">
+				and a.create_user = #{pd.create_user}
+			</if>
+			<if test="pd.create_organize != null and pd.create_organize != ''">
+				and a.create_organize = #{pd.create_organize}
+			</if>
+			<if test="pd.create_org_cascade != null and pd.create_org_cascade != ''">
+				and a.create_org_cascade = #{pd.create_org_cascade}
+			</if>
+		<if test="pd.auth_type == 5">
+			<if test="param != null and param != ''">
+				 and ( ${param} )
+			</if>
+		</if>
+			order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询分页数量-->
+	<select id="findListSize" parameterType="com.wdata.base.util.Page" resultType="Integer">
+		select
+		count(*)
+		from system_organize as a
+		where 1=1
+		<if test="pd.org_cascade != null and pd.org_cascade != ''">
+			and a.org_cascade like concat('%', #{pd.org_cascade},'%')
+		</if>
+		<if test="pd.name != null and pd.name != ''">
+			and a.name like concat('%', #{pd.name},'%')
+		</if>
+		<if test="pd.short_name != null and pd.short_name != ''">
+			and a.short_name like concat('%', #{pd.short_name},'%')
+		</if>
+		<if test="pd.type != null and pd.type != ''"><!-- 类型 -->
+			and a.type = #{pd.type}
+		</if>
+		<if test="pd.parent_id != null and pd.parent_id != ''">
+			and a.parent_id = #{pd.parent_id}
+		</if>
+		<if test="pd.parent_code != null and pd.parent_code != ''">
+			and a.parent_code = #{pd.parent_code}
+		</if>
+		<!-- 数据权限 -->
+		<if test="pd.create_user != null and pd.create_user != ''">
+			and a.create_user = #{pd.create_user}
+		</if>
+		<if test="pd.create_organize != null and pd.create_organize != ''">
+			and a.create_organize = #{pd.create_organize}
+		</if>
+		<if test="pd.create_org_cascade != null and pd.create_org_cascade != ''">
+			and a.create_org_cascade = #{pd.create_org_cascade}
+		</if>
+		<if test="pd.auth_type == 5">
+			<if test="param != null and param != ''">
+				and ( ${param} )
+			</if>
+		</if>
+	</select>
+
+	<!--查询列表-->
+	<select id="findList" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.org_cascade as "org_cascade",
+			a.name as "name",
+			a.short_name as "short_name",
+			a.type as "type",
+			a.parent_id as "parent_id",
+			a.order_by as "order_by",
+			a.level as "level",
+			a.code as "code",
+			a.parent_code as "parent_code",
+			a.fg_leader as "fg_leader",
+			a.bm_leader as "bm_leader",
+			a.sj_leader as "sj_leader",
+			a.remark as "remark",
+			a.create_time as "create_time",
+			a.update_time as "update_time"
+			from system_organize as a
+			where 1=1
+			<if test="org_cascade != null and org_cascade != ''">
+				and a.org_cascade like concat('%', #{org_cascade},'%')
+			</if>
+			<if test="name != null and name != ''">
+				and a.name like concat('%', #{name},'%')
+			</if>
+			<if test="short_name != null and short_name != ''">
+				and a.short_name like concat('%', #{short_name},'%')
+			</if>
+			<if test="type != null and type != ''"><!-- 类型 -->
+				and a.type = #{type}
+			</if>
+			<if test="parent_id != null and parent_id != ''">
+				and a.parent_id = #{parent_id}
+			</if>
+			<if test="parent_code != null and parent_code != ''">
+				and a.parent_code = #{parent_code}
+			</if>
+			order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询详情-->
+	<select id="findInfo" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.org_cascade as "org_cascade",
+			a.name as "name",
+			a.short_name as "short_name",
+			a.type as "type",
+			a.parent_id as "parent_id",
+			a.order_by as "order_by",
+			a.level as "level",
+			a.code as "code",
+			a.parent_code as "parent_code",
+			a.fg_leader as "fg_leader",
+			a.bm_leader as "bm_leader",
+			a.sj_leader as "sj_leader",
+			a.remark as "remark",
+			a.create_time as "create_time",
+			a.update_time as "update_time",
+			b.name as "parent_name"
+			from system_organize as a
+			left join system_organize b on a.parent_id=b.id
+			where a.id = #{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.wdata.base.util.PageData">
+		insert into system_organize (org_cascade,name,short_name,type,parent_id,order_by,level,code,parent_code,fg_leader,bm_leader,sj_leader,remark,create_user,create_organize,create_org_cascade,create_time,update_time)
+		VALUES
+		(#{org_cascade},#{name},#{short_name},#{type},#{parent_id},#{order_by},#{level},#{code},#{parent_code},#{fg_leader},#{bm_leader},#{sj_leader},#{remark},#{create_user},#{create_organize},#{create_org_cascade},#{create_time},#{update_time})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<!--更新-->
+	<update id="update" parameterType="com.wdata.base.util.PageData">
+		update system_organize set
+		<if test="org_cascade != null and org_cascade != '' ">
+			org_cascade=#{org_cascade},
+		</if>
+		<if test="name != null and name != '' ">
+			name=#{name},
+		</if>
+		<if test="short_name != null and short_name != '' ">
+			short_name=#{short_name},
+		</if>
+		<if test="type != null and type != '' ">
+			type=#{type},
+		</if>
+		<if test="order_by != null and order_by != '' ">
+			order_by=#{order_by},
+		</if>
+		<if test="level != null and level != '' ">
+			level=#{level},
+		</if>
+		<if test="fg_leader != null and fg_leader != '' ">
+			fg_leader=#{fg_leader},
+		</if>
+		<if test="bm_leader != null and bm_leader != '' ">
+			bm_leader=#{bm_leader},
+		</if>
+		<if test="sj_leader != null and sj_leader != '' ">
+			sj_leader=#{sj_leader},
+		</if>
+		<if test="remark != null and remark != '' ">
+			remark=#{remark},
+		</if>
+		update_time=#{update_time}
+		where id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delOne" parameterType="String">
+		delete from system_organize where org_cascade like concat('%',(select a.org_cascade from (select id,org_cascade from system_organize) a where a.id=#{id}),'%')
+	</delete>
+
+
+</mapper>

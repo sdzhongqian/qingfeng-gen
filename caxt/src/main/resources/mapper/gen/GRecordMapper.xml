@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wdata.gen.dao.GRecordDao">
+
+	<!--查询分页列表-->
+	<select id="findListPage" parameterType="com.wdata.base.util.Page" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.member_id as "member_id",
+			a.name as "name",
+			a.content as "content",
+			a.type as "type",
+			a.create_time as "create_time"
+			from gen_record a
+			where 1=1
+			<if test="pd.name != null and pd.name != ''">
+				and a.name like concat('%', #{pd.name},'%')
+			</if>
+			<if test="pd.type != null and pd.type != ''">
+				and a.type = #{pd.type}
+			</if>
+			<if test="pd.date != null and pd.date != ''">
+				and left(a.create_time,10) = #{pd.date}
+			</if>
+			order by a.create_time desc
+	</select>
+
+	<!--查询分页数量-->
+	<select id="findListSize" parameterType="com.wdata.base.util.Page" resultType="Integer">
+		select
+			count(*)
+			from gen_record as a
+			where 1=1
+			<if test="pd.name != null and pd.name != ''">
+				and a.name like concat('%', #{pd.name},'%')
+			</if>
+			<if test="pd.type != null and pd.type != ''">
+				and a.type = #{pd.type}
+			</if>
+			<if test="pd.date != null and pd.date != ''">
+				and left(a.create_time,10) = #{pd.date}
+			</if>
+		</select>
+
+
+	<insert id="save" parameterType="com.wdata.base.util.PageData">
+		insert into gen_record
+		(member_id,name,content,type,create_time)
+		values
+		(#{member_id},#{name},#{content},#{type},#{create_time})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+</mapper>

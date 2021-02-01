@@ -1,0 +1,47 @@
+body{ background: #f7f7f7; font-family: "微软雅黑";}
+        .drag { width: 98%; margin: 0 auto; font-family: arial,SimSun;}
+        .drag .item {     box-sizing: border-box;display: inline-block; margin: 0 1% 1% 0;/* background-color: #ccc;*/    float: left;}
+        .drag .item1 {  width: 24%;}
+        .drag .item2 {  width: 24%;}
+        .drag .item3 {  width: 24%;}
+        .drag .item4 { width: 24%;}
+        .drag .item5 {width: 24%;}
+        .drag .item6 { width: 49%;}
+        .drag .item7 { width: 24%;}
+        .drag .item8 {  width: 99%;}
+        .drag .item9 { width: 74%;}
+        .drag .item10 {  width: 24%;}
+        .drag h4 { margin: 0; padding: 0.5rem; border-bottom: 1px solid #e3e3e3;font-size: 0.75rem; }
+li{ list-style: none;}    
+a{ text-decoration: none;}
+*{margin: 0;padding: 0;}
+/*.region{ background: #fff;}*/
+.region-shadow{ box-shadow:3px 3px 3px #E3e3e3;}
+.region-radius { border-radius: 5px;}
+.region-radius .title{ border-radius: 5px 5px 0 0;}
+.title{ background: #fff; position: relative;}
+.title h4{ font-weight: 500;font-size: 16px;
+    text-align: left;
+    color: #303e51;}
+.content { display: block; min-height: 120px;text-align: center; padding: 10px;}
+.region-radius .content{ border-radius: 0 0 5px 5px;}
+.content{ background: #fff; position: relative; overflow-y: auto;}
+.decorator {
+    width: 4px;
+    height: 17px;
+    background-color: #74b9ff;
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: -2px;
+}
+.btn{ position: absolute; right: 5px; top: 8px;}
+.btn img{ width: 18px; padding:0 3px;}
+
+.new li{ display: block; color: #000; line-height: 24px; text-align: left;}
+.new li a{ color: #000;}
+.data{ color: #999; float: right;}
+.font14 li{ font-size: 14px;}
+.slyc{ display: inline-block; width: 62%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.list-pic .pic{ float: left; width: 26%; margin-right: 2%; height:110px; overflow:hidden;}
+.list-pic .pic img{ width: 100%; border: 1px solid #e3e3e3;}
+.list-pic .new{ float: left; width: 70%;}

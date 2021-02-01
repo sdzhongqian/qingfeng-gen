@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wdata.gen.dao.GMessageDao">
+
+	<!--查询分页列表-->
+	<select id="findListPage" parameterType="com.wdata.base.util.Page" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.title as "title",
+			a.content as "content",
+			a.type as "type",
+			a.status as "status",
+			a.order_by as "order_by",
+			a.remark as "remark",
+			a.create_user as "create_user",
+			a.create_organize as "create_organize",
+			a.create_org_cascade as "create_org_cascade",
+			a.create_time as "create_time",
+			a.update_time as "update_time"
+			from gen_message a
+			where 1=1
+			<if test="pd.title != null and pd.title != ''">
+				and a.title like concat('%', #{pd.title},'%')
+			</if>
+			<if test="pd.status != null and pd.status != ''"><!-- 状态 -->
+				and a.status = #{pd.status}
+			</if>
+			<!-- 数据权限 -->
+			<if test="pd.create_user != null and pd.create_user != ''">
+				and a.create_user = #{pd.create_user}
+			</if>
+			<if test="pd.create_organize != null and pd.create_organize != ''">
+				and a.create_organize = #{pd.create_organize}
+			</if>
+			<if test="pd.create_org_cascade != null and pd.create_org_cascade != ''">
+				and a.create_org_cascade = #{pd.create_org_cascade}
+			</if>
+			<if test="pd.auth_type == 5">
+				<if test="param != null and param != ''">
+					and ( ${param} )
+				</if>
+			</if>
+			order by a.status desc,a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询分页数量-->
+	<select id="findListSize" parameterType="com.wdata.base.util.Page" resultType="Integer">
+		select
+			count(*)
+			from gen_message a
+			where 1=1
+			<if test="pd.title != null and pd.title != ''">
+				and a.title like concat('%', #{pd.title},'%')
+			</if>
+			<if test="pd.status != null and pd.status != ''"><!-- 状态 -->
+				and a.status = #{pd.status}
+			</if>
+			<!-- 数据权限 -->
+			<if test="pd.create_user != null and pd.create_user != ''">
+				and a.create_user = #{pd.create_user}
+			</if>
+			<if test="pd.create_organize != null and pd.create_organize != ''">
+				and a.create_organize = #{pd.create_organize}
+			</if>
+			<if test="pd.create_org_cascade != null and pd.create_org_cascade != ''">
+				and a.create_org_cascade = #{pd.create_org_cascade}
+			</if>
+			<if test="pd.auth_type == 5">
+				<if test="param != null and param != ''">
+					and ( ${param} )
+				</if>
+			</if>
+	</select>
+
+	<!--查询列表-->
+	<select id="findList" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.title as "title",
+			a.content as "content",
+			a.type as "type",
+			a.status as "status",
+			a.order_by as "order_by",
+			a.remark as "remark",
+			a.create_user as "create_user",
+			a.create_organize as "create_organize",
+			a.create_org_cascade as "create_org_cascade",
+			a.create_time as "create_time",
+			a.update_time as "update_time"
+			from gen_message a
+			where 1=1
+			<if test="title != null and title != ''">
+				and a.title like concat('%', #{title},'%')
+			</if>
+			<if test="status != null and status != ''"><!-- 状态 -->
+				and a.status = #{status}
+			</if>
+			order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询详情-->
+	<select id="findInfo" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.title as "title",
+			a.content as "content",
+			a.type as "type",
+			a.status as "status",
+			a.order_by as "order_by",
+			a.remark as "remark",
+			a.create_user as "create_user",
+			a.create_organize as "create_organize",
+			a.create_org_cascade as "create_org_cascade",
+			a.create_time as "create_time",
+			a.update_time as "update_time"
+			from gen_message a
+			where a.id = #{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.wdata.base.util.PageData">
+		insert into gen_message
+		(title,content,type,status,order_by,remark,create_user,create_organize,create_org_cascade,create_time,update_time)
+		values
+		(#{title},#{content},#{type},#{status},#{order_by},#{remark},#{create_user},#{create_organize},#{create_org_cascade},#{create_time},#{update_time})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<!--更新-->
+	<update id="update" parameterType="com.wdata.base.util.PageData">
+		update gen_message set
+		<if test="title != null and title != '' ">
+			title=#{title},
+		</if>
+		<if test="content != null and content != '' ">
+			content=#{content},
+		</if>
+		<if test="type != null and type != '' ">
+			type=#{type},
+		</if>
+		<if test="status != null and status != '' ">
+			status=#{status},
+		</if>
+		<if test="order_by != null and order_by != '' ">
+			order_by=#{order_by},
+		</if>
+		<if test="remark != null and remark != '' ">
+			remark=#{remark},
+		</if>
+		update_time=#{update_time}
+		where id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="del" parameterType="String">
+		delete from gen_message where id in
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+
+	<update id="updateStatus" parameterType="com.wdata.base.util.PageData">
+		update gen_message set
+			status=#{status},
+			update_time=#{update_time}
+			where 1=1
+			<if test="id != null and id != '' ">
+				and id=#{id}
+			</if>
+	</update>
+
+
+
+	<select id="findInfoForStatus" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+		a.id as "id",
+		a.title as "title",
+		a.content as "content",
+		a.type as "type",
+		a.status as "status",
+		a.order_by as "order_by",
+		a.remark as "remark",
+		a.create_user as "create_user",
+		a.create_organize as "create_organize",
+		a.create_org_cascade as "create_org_cascade",
+		a.create_time as "create_time",
+		a.update_time as "update_time"
+		from gen_message a
+		where a.status = 'Y'
+		limit 0,1
+	</select>
+
+</mapper>

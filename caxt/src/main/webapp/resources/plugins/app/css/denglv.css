@@ -1,0 +1,99 @@
+.body-conter .div-dl{width: 95%;
+border-radius:5px ;
+background-color: #fff;
+ margin: 0px auto;
+ height: 6.6em;
+   margin-top: 1em;
+ }
+body{ background-color: #f2f2f2;}
+.body-conter .div-dl ul{
+	margin: 0px;
+	width: 100%;
+	padding: inherit;
+
+	border: none;
+	
+}
+.body-conter .div-dl ul .yhm{
+	 padding: inherit;
+	 padding: 0px;
+	 border-bottom: 1px solid #f2f2f2;
+	  padding: 9px 0px ;
+}
+.body-conter .div-dl ul .yhm .yhico{
+	width: 30px; float: left;
+	padding-left: 0.5em;
+	
+}
+.body-conter .div-dl ul .yhm  .qk{
+	width: 30px;
+	float: right;
+	padding-right: 0.5em;
+}
+.body-conter .div-dl ul .yhm  input{
+	color: #333;
+  padding-left: 15px;
+  height: 2em;
+  font-size: 1em;
+  border: 0px none;
+  line-height: 2em;
+  width: 60%;
+  background: transparent none repeat scroll 0% 0%;
+}
+ .body-conter .div-mmzd{
+ 	margin: 0px auto;
+ 	width: 95%;
+ 	height: auto;
+   
+ }
+  .body-conter .div-mmzd ul li .left-wjmm{
+  	font-size: 0.8em; color: #5FB52C;
+  }
+.body-conter .div-mmzd ul{
+	padding:initial;
+	border: inherit;
+	margin-top: 0.5em;
+}
+
+ .body-conter .div-mmzd ul li .right-zddl{
+ 	font-size: 0.8em; 
+ 	float: right;
+ }
+.body-conter .div-mmzd ul li .right-zddl input{
+	position: relative;
+	top:2px;
+}
+ .body-conter .div-mmzd ul li .right-zddl a{
+ 	 text-decoration: none;
+ 	 color: #009cff;
+ }
+ .body-conter .div-mmzd .dl-button{
+ 	width: 100%;
+ 	text-align: center;
+ 	padding: 0.7em 0px;
+ 	background-color: #00b38a;
+ 	margin-top: 0.5em;
+ 	color: #fff;
+ }
+
+ .body-conter .div-mmzd .fgx{
+ 	text-align: center;
+ 	width: 100%;
+ 	color: #8e8e8e;
+ 	font-size: 0.8em;
+ 	padding: 1em 0px;
+ }
+.body-conter .div-dl ul .yhm .yzmb{
+	float: right;
+	background-color: #5FB52C;
+	width: 90px;
+	line-height: 2em;
+	text-align: center;
+	color: #fff;
+	font-size: 0.9em;
+	margin-right: 0.5em;
+	
+}
+
+
+ 

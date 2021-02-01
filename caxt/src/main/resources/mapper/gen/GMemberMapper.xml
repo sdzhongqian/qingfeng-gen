@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wdata.gen.dao.GMemberDao">
+
+	<!--查询分页列表-->
+	<select id="findListPage" parameterType="com.wdata.base.util.Page" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.family_id as "family_id",
+			a.generation_id as "generation_id",
+			a.father_id as "father_id",
+			a.mother_id as "mother_id",
+			a.name as "name",
+			a.content as "content",
+			a.tpdz as "tpdz",
+			a.level as "level",
+			a.order_by as "order_by",
+			a.open_wife as "open_wife",
+			a.remark as "remark",
+			a.create_user as "create_user",
+			a.create_organize as "create_organize",
+			a.create_org_cascade as "create_org_cascade",
+			a.create_time as "create_time",
+			a.update_time as "update_time",
+			b.name as "family_name",
+			c.name as "generation_name",
+			d.name as "level_name"
+			from gen_member a
+			left join gen_family b on a.family_id=b.id
+			left join gen_generation c on a.generation_id=c.id
+			left join system_dictionary d on a.level=d.id
+			where 1=1
+			<if test="pd.name != null and pd.name != ''">
+				and a.name like concat('%', #{pd.name},'%')
+			</if>
+			<if test="pd.family_id != null and pd.family_id != ''">
+				and a.family_id = #{pd.family_id}
+			</if>
+			<if test="pd.generation_id != null and pd.generation_id != ''">
+				and a.generation_id = #{pd.generation_id}
+			</if>
+			<if test="pd.father_id != null and pd.father_id != ''">
+				and a.father_id = #{pd.father_id}
+			</if>
+			<if test="pd.mother_id != null and pd.mother_id != ''">
+				and a.mother_id = #{pd.mother_id}
+			</if>
+			<!-- 数据权限 -->
+			<if test="pd.create_user != null and pd.create_user != ''">
+				and a.create_user = #{pd.create_user}
+			</if>
+			<if test="pd.create_organize != null and pd.create_organize != ''">
+				and a.create_organize = #{pd.create_organize}
+			</if>
+			<if test="pd.create_org_cascade != null and pd.create_org_cascade != ''">
+				and a.create_org_cascade = #{pd.create_org_cascade}
+			</if>
+			<if test="pd.auth_type == 5">
+				<if test="param != null and param != ''">
+					and ( ${param} )
+				</if>
+			</if>
+			order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询分页数量-->
+	<select id="findListSize" parameterType="com.wdata.base.util.Page" resultType="Integer">
+		select
+			count(*)
+			from gen_member as a
+			where 1=1
+			<if test="pd.name != null and pd.name != ''">
+				and a.name like concat('%', #{pd.name},'%')
+			</if>
+			<if test="pd.family_id != null and pd.family_id != ''">
+				and a.family_id = #{pd.family_id}
+			</if>
+			<if test="pd.generation_id != null and pd.generation_id != ''">
+				and a.generation_id = #{pd.generation_id}
+			</if>
+			<if test="pd.father_id != null and pd.father_id != ''">
+				and a.father_id = #{pd.father_id}
+			</if>
+			<if test="pd.mother_id != null and pd.mother_id != ''">
+				and a.mother_id = #{pd.mother_id}
+			</if>
+			<!-- 数据权限 -->
+			<if test="pd.create_user != null and pd.create_user != ''">
+				and a.create_user = #{pd.create_user}
+			</if>
+			<if test="pd.create_organize != null and pd.create_organize != ''">
+				and a.create_organize = #{pd.create_organize}
+			</if>
+			<if test="pd.create_org_cascade != null and pd.create_org_cascade != ''">
+				and a.create_org_cascade = #{pd.create_org_cascade}
+			</if>
+			<if test="pd.auth_type == 5">
+				<if test="param != null and param != ''">
+					and ( ${param} )
+				</if>
+			</if>
+		</select>
+
+		<!--查询列表-->
+		<select id="findList" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+			select
+				a.id as "id",
+				a.family_id as "family_id",
+				a.generation_id as "generation_id",
+				a.father_id as "father_id",
+				a.mother_id as "mother_id",
+				a.name as "name",
+				a.content as "content",
+				a.tpdz as "tpdz",
+				a.level as "level",
+				a.order_by as "order_by",
+				a.open_wife as "open_wife",
+				a.remark as "remark",
+				a.create_user as "create_user",
+				a.create_organize as "create_organize",
+				a.create_org_cascade as "create_org_cascade",
+				a.create_time as "create_time",
+				a.update_time as "update_time",
+				b.name as "father_name",
+				c.name as "generation_name"
+				from gen_member a
+				left join gen_member b on a.father_id=b.id
+				left join gen_generation c on a.generation_id=c.id
+				where 1=1
+				<if test="name != null and name != ''">
+					and a.name like concat('%', #{name},'%')
+				</if>
+				<if test="family_id != null and family_id != ''">
+					and a.family_id = #{family_id}
+				</if>
+				<if test="generation_id != null and generation_id != ''">
+					and a.generation_id = #{generation_id}
+				</if>
+				<if test="father_id != null and father_id != ''">
+					and a.father_id = #{father_id}
+				</if>
+				<if test="mother_id != null and mother_id != ''">
+					and a.mother_id = #{mother_id}
+				</if>
+				order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询详情-->
+	<select id="findInfo" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.family_id as "family_id",
+			a.generation_id as "generation_id",
+			a.father_id as "father_id",
+			a.mother_id as "mother_id",
+			a.name as "name",
+			a.content as "content",
+			a.tpdz as "tpdz",
+			a.level as "level",
+			a.order_by as "order_by",
+			a.open_wife as "open_wife",
+			a.remark as "remark",
+			a.create_user as "create_user",
+			a.create_organize as "create_organize",
+			a.create_org_cascade as "create_org_cascade",
+			a.create_time as "create_time",
+			a.update_time as "update_time"
+			from gen_member a
+			where a.id = #{id}
+	</select>
+
+
+	<!--保存-->
+	<insert id="save" parameterType="com.wdata.base.util.PageData">
+		insert into gen_member
+		(family_id,generation_id,father_id,mother_id,name,content,tpdz,level,order_by,open_wife,remark,create_user,create_organize,create_org_cascade,create_time,update_time)
+		values
+		(#{family_id},#{generation_id},#{father_id},#{mother_id},#{name},#{content},#{tpdz},#{level},#{order_by},#{open_wife},#{remark},#{create_user},#{create_organize},#{create_org_cascade},#{create_time},#{update_time})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	<!--更新-->
+	<update id="update" parameterType="com.wdata.base.util.PageData">
+		update gen_member set
+		<if test="family_id != null and family_id != '' ">
+			family_id=#{family_id},
+		</if>
+		<if test="generation_id != null and generation_id != '' ">
+			generation_id=#{generation_id},
+		</if>
+		<if test="father_id != null and father_id != '' ">
+			father_id=#{father_id},
+		</if>
+		<if test="mother_id != null and mother_id != '' ">
+			mother_id=#{mother_id},
+		</if>
+		<if test="name != null and name != '' ">
+			name=#{name},
+		</if>
+		<if test="content != null and content != '' ">
+			content=#{content},
+		</if>
+		<if test="tpdz != null and tpdz != '' ">
+			tpdz=#{tpdz},
+		</if>
+		<if test="level != null and level != '' ">
+			level=#{level},
+		</if>
+		<if test="order_by != null and order_by != '' ">
+			order_by=#{order_by},
+		</if>
+		<if test="remark != null and remark != '' ">
+			remark=#{remark},
+		</if>
+		open_wife=#{open_wife},
+		update_time=#{update_time}
+		where id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="del" parameterType="String">
+		delete from gen_member where id in
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+	<!--查询妻子列表-->
+	<select id="findWifeList" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+		a.id as "id",
+		a.member_id as "member_id",
+		a.name as "name",
+		a.content as "content",
+		a.tpdz as "tpdz",
+		a.level as "level",
+		a.remark as "remark",
+		a.create_user as "create_user",
+		a.create_time as "create_time",
+		a.update_time as "update_time"
+		from gen_member_wife a
+		where 1=1
+		<if test="name != null and name != ''">
+			and a.name like concat('%', #{name},'%')
+		</if>
+		<if test="member_id != null and member_id != ''">
+			and a.member_id = #{member_id}
+		</if>
+		order by a.level+0 asc, a.create_time desc
+	</select>
+
+	<!--添加妻子-->
+	<insert id="saveWife" parameterType="com.wdata.base.util.PageData">
+		insert into gen_member_wife
+		(member_id,name,content,tpdz,level,remark,create_user,create_time,update_time)
+		values
+		(#{member_id},#{name},#{content},#{tpdz},#{level},#{remark},#{create_user},#{create_time},#{update_time})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<!--更新-->
+	<update id="updateWife" parameterType="com.wdata.base.util.PageData">
+		update gen_member_wife set
+		<if test="member_id != null and member_id != '' ">
+			member_id=#{member_id},
+		</if>
+		<if test="name != null and name != '' ">
+			name=#{name},
+		</if>
+		<if test="content != null and content != '' ">
+			content=#{content},
+		</if>
+		<if test="tpdz != null and tpdz != '' ">
+			tpdz=#{tpdz},
+		</if>
+		<if test="level != null and level != '' ">
+			level=#{level},
+		</if>
+		<if test="remark != null and remark != '' ">
+			remark=#{remark},
+		</if>
+		update_time=#{update_time}
+		where id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delWife" parameterType="String">
+		delete from gen_member_wife where id in
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!--根据主人员信息删除删除-->
+	<delete id="delWifeForMemberId" parameterType="String">
+		delete from gen_member_wife where member_id in
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+
+
+
+	<select id="findGTreeList" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+		a.id as "id",
+		a.name as "name",
+		"0" as "parent_id"
+		from gen_generation a
+		where a.family_id=#{family_id}
+		order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+
+
+</mapper>

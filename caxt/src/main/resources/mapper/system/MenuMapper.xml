@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wdata.system.dao.MenuDao">
+
+	<!--查询分页列表-->
+	<select id="findListPage" parameterType="com.wdata.base.util.Page" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.classify as "classify",
+			a.menu_cascade as "menu_cascade",
+			a.name as "name",
+			a.code as "code",
+			a.parent_id as "parent_id",
+			a.url as "url",
+			a.icon as "icon",
+			a.type as "type",
+			a.level as "level",
+			a.order_by as "order_by",
+			a.remark as "remark",
+			a.create_time as "create_time",
+			a.update_time as "update_time"
+			from system_menu as a
+			where 1=1
+			<if test="pd.name != null and pd.name != ''">
+				and a.name like concat('%', #{pd.name},'%')
+			</if>
+			<if test="pd.code != null and pd.code != ''">
+				and a.code like concat('%', #{pd.code},'%')
+			</if>
+			<if test="pd.parent_id != null and pd.parent_id != ''">
+				and a.parent_id = #{pd.parent_id}
+			</if>
+			<if test="pd.type != null and pd.type != ''">
+				and a.type = #{pd.type}
+			</if>
+			<!-- 数据权限 -->
+			<if test="pd.create_user != null and pd.create_user != ''">
+				and a.create_user = #{pd.create_user}
+			</if>
+			<if test="pd.create_organize != null and pd.create_organize != ''">
+				and a.create_organize = #{pd.create_organize}
+			</if>
+			<if test="pd.create_org_cascade != null and pd.create_org_cascade != ''">
+				and a.create_org_cascade = #{pd.create_org_cascade}
+			</if>
+			<if test="pd.auth_type == 5">
+				<if test="param != null and param != ''">
+					and ( ${param} )
+				</if>
+			</if>
+			order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询分页数量-->
+	<select id="findListSize" parameterType="com.wdata.base.util.Page" resultType="Integer">
+		select
+			count(*)
+			from system_menu as a
+			where 1=1
+			<if test="pd.name != null and pd.name != ''">
+				and a.name like concat('%', #{pd.name},'%')
+			</if>
+			<if test="pd.code != null and pd.code != ''">
+				and a.code like concat('%', #{pd.code},'%')
+			</if>
+			<if test="pd.parent_id != null and pd.parent_id != ''">
+				and a.parent_id = #{pd.parent_id}
+			</if>
+			<if test="pd.type != null and pd.type != ''">
+				and a.type = #{pd.type}
+			</if>
+			<!-- 数据权限 -->
+			<if test="pd.create_user != null and pd.create_user != ''">
+				and a.create_user = #{pd.create_user}
+			</if>
+			<if test="pd.create_organize != null and pd.create_organize != ''">
+				and a.create_organize = #{pd.create_organize}
+			</if>
+			<if test="pd.create_org_cascade != null and pd.create_org_cascade != ''">
+				and a.create_org_cascade = #{pd.create_org_cascade}
+			</if>
+			<if test="pd.auth_type == 5">
+				<if test="param != null and param != ''">
+					and ( ${param} )
+				</if>
+			</if>
+	</select>
+
+	<!--查询列表-->
+	<select id="findList" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.classify as "classify",
+			a.menu_cascade as "menu_cascade",
+			a.name as "name",
+			a.code as "code",
+			a.parent_id as "parent_id",
+			a.url as "url",
+			a.icon as "icon",
+			a.type as "type",
+			a.level as "level",
+			a.order_by as "order_by",
+			a.remark as "remark",
+			a.create_time as "create_time",
+			a.update_time as "update_time"
+			from system_menu as a
+			where 1=1
+			<if test="name != null and name != ''">
+				and a.name like concat('%', #{name},'%')
+			</if>
+			<if test="code != null and code != ''">
+				and a.code like concat('%', #{code},'%')
+			</if>
+			<if test="parent_id != null and parent_id != ''">
+				and a.parent_id = #{parent_id}
+			</if>
+			<if test="type != null and type != ''">
+				and a.type = #{type}
+			</if>
+			order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询详情-->
+	<select id="findInfo" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id as "id",
+			a.classify as "classify",
+			a.menu_cascade as "menu_cascade",
+			a.name as "name",
+			a.code as "code",
+			a.parent_id as "parent_id",
+			a.url as "url",
+			a.icon as "icon",
+			a.type as "type",
+			a.level as "level",
+			a.order_by as "order_by",
+			a.remark as "remark",
+			a.create_time as "create_time",
+			a.update_time as "update_time",
+			b.name as "parent_name"
+			from system_menu as a
+			left join system_menu b on a.parent_id=b.id
+			where a.id = #{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.wdata.base.util.PageData">
+		insert into system_menu (classify,menu_cascade,name,code,parent_id,url,icon,type,level,order_by,remark,create_user,create_organize,create_org_cascade,create_time,update_time)
+		VALUES
+		(#{classify},#{menu_cascade},#{name},#{code},#{parent_id},#{url},#{icon},#{type},#{level},#{order_by},#{remark},#{create_user},#{create_organize},#{create_org_cascade},#{create_time},#{update_time})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<!--更新-->
+	<update id="update" parameterType="com.wdata.base.util.PageData">
+		update system_menu set
+		<if test="classify != null and classify != '' ">
+			classify=#{classify},
+		</if>
+		<if test="menu_cascade != null and menu_cascade != '' ">
+			menu_cascade=#{menu_cascade},
+		</if>
+		<if test="name != null and name != '' ">
+			name=#{name},
+		</if>
+		<if test="code != null and code != '' ">
+			code=#{code},
+		</if>
+		<if test="url != null and url != '' ">
+			url=#{url},
+		</if>
+		<if test="icon != null and icon != '' ">
+			icon=#{icon},
+		</if>
+		<if test="type != null and type != '' ">
+			type=#{type},
+		</if>
+		<if test="level != null and level != '' ">
+			level=#{level},
+		</if>
+		<if test="order_by != null and order_by != '' ">
+			order_by=#{order_by},
+		</if>
+		<if test="remark != null and remark != '' ">
+			remark=#{remark},
+		</if>
+		update_time=#{update_time}
+		where id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delOne" parameterType="String">
+		delete from system_menu where menu_cascade like concat('%',(select a.menu_cascade from (select id,menu_cascade from system_menu) a where a.id=#{id}),'%')
+	</delete>
+
+	<!--根据类型和父级id删除-->
+	<delete id="delForParam" parameterType="com.wdata.base.util.PageData">
+		delete from system_menu where type=#{type} and parent_id=#{parent_id}
+	</delete>
+
+
+
+	<select id="findMenuList" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+		a.id as "id",
+		a.name as "title",
+		a.url as "href",
+		a.icon as "icon",
+		a.code as "code",
+		c.id as "user_auth_id",
+		c.type as "user_auth_type",
+		case when c.organize_ids='undefined' then '' else  c.organize_ids end,
+		case when c.organize_names='undefined' then '' else  c.organize_names end
+		from system_menu as a
+		left join system_role_menu b on a.id=b.menu_id
+		left join system_user_auth c on a.id=c.menu_id and c.user_id=#{user_id}
+		where b.role_id in (
+			select role_id from system_user_role where user_ids like concat('%,',#{user_id},'%') or organize_ids like concat('%,',#{organize_id},'%')
+		)
+		<if test="parent_id != null and parent_id != ''">
+			and a.parent_id = #{parent_id}
+		</if>
+		<if test="type != null and type != ''">
+			and a.type = #{type}
+		</if>
+		<if test="level != null and level != ''">
+			and a.level = #{level}
+		</if>
+		<if test="classify != null and classify != ''">
+			and a.classify = #{classify}
+		</if>
+		group by a.id
+		order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+
+	<delete id="delRoleMenu" parameterType="String">
+		delete from system_role_menu where menu_id=#{menu_id}
+	</delete>
+
+
+</mapper>

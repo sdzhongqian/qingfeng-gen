@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wdata.gen.dao.GShowDao">
+
+
+	<!--查询列表-->
+	<select id="findMemberList" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id,
+			concat(c.name,'：',a.name,'(',sd.name,')') as "name",
+			IFNULL(concat('家属：',b.title),concat('家属：无')) as "title",
+			IFNULL(d.child_num,concat('家属：无')) as "title",
+			IF(d.child_num>0,'111','110') as "relationship"
+			from gen_member a
+			left join gen_generation c on a.generation_id=c.id
+			left join (
+			select GROUP_CONCAT(name) as "title",member_id from gen_member_wife group by member_id
+			) b on a.id=b.member_id
+			left join (
+			select father_id,count(*) as "child_num" from gen_member group by father_id
+			) d on a.id=d.father_id
+			left join system_dictionary sd on a.level=sd.id
+			where 1=1
+			<if test="name != null and name != ''">
+				and a.name like concat('%', #{name},'%')
+			</if>
+			<if test="exclude_id != null and exclude_id != ''">
+				and a.id != #{exclude_id}
+			</if>
+			<if test="family_id != null and family_id != ''">
+				and a.family_id = #{family_id}
+			</if>
+			<if test="generation_id != null and generation_id != ''">
+				and a.generation_id = #{generation_id}
+			</if>
+			<if test="father_id != null and father_id != ''">
+				and a.father_id = #{father_id}
+			</if>
+			<if test="mother_id != null and mother_id != ''">
+				and a.mother_id = #{mother_id}
+			</if>
+			order by a.order_by+0 asc, a.create_time desc
+	</select>
+
+	<!--查询详情-->
+	<select id="findMemberInfo" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+			a.id,
+			concat(c.name,'：',a.name,'(',sd.name,')') as "name",
+			IFNULL(concat('家属：',b.title),concat('家属：无')) as "title",
+			IFNULL(d.child_num,concat('家属：无')) as "title",
+			IF(a.father_id=''||a.father_id is null,'001','111') as "relationship"
+-- 			IF(d.child_num>0,111,110) as "relationship"
+			from gen_member a
+			left join gen_generation c on a.generation_id=c.id
+			left join (
+				select GROUP_CONCAT(name) as "title",member_id from gen_member_wife group by member_id
+			) b on a.id=b.member_id
+			left join (
+				select father_id,count(*) as "child_num" from gen_member group by father_id
+			) d on a.id=d.father_id
+			left join system_dictionary sd on a.level=sd.id
+			where a.id = #{id}
+	</select>
+
+
+
+	<select id="findMemberListPage" parameterType="com.wdata.base.util.PageData" resultType="com.wdata.base.util.PageData">
+		select
+		a.id,
+		concat(c.name,'：',a.name,'(',sd.name,')') as "name",
+		IFNULL(concat('家属：',b.title),concat('家属：无')) as "title",
+		IFNULL(d.child_num,0) as "child_num",
+		IF(d.child_num>0,'111','110') as "relationship",
+		IFNULL(g.name,'无') as "father_name"
+		from gen_member a
+		left join gen_generation c on a.generation_id=c.id
+		left join (
+		select GROUP_CONCAT(name) as "title",member_id from gen_member_wife group by member_id
+		) b on a.id=b.member_id
+		left join (
+		select father_id,count(*) as "child_num" from gen_member group by father_id
+		) d on a.id=d.father_id
+		left join gen_member g on a.father_id=g.id
+		left join system_dictionary sd on a.level=sd.id
+		where 1=1
+		<if test="name != null and name != ''">
+			and a.name like concat('%', #{name},'%')
+		</if>
+		<if test="generation_id != null and generation_id != ''">
+			and a.generation_id = #{generation_id}
+		</if>
+		order by a.order_by+0 asc, a.create_time desc
+		<if test="endPage != null and endPage != ''">
+			limit #{startPage},#{endPage}
+		</if>
+	</select>
+
+
+</mapper>

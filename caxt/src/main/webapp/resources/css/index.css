@@ -1,0 +1,35 @@
+.index-head{ background:#fff;
+    padding:15px;
+    border-radius:5px; position: relative;
+    height: 60px;}
+.head-img{width: 60px; height: 60px; position: absolute;}
+.head-img img{width: 60px; height: 60px; border-radius: 50%;}
+.wel{ position: absolute;
+    top: 20px;
+    left:90px;}
+.wel .style-1{ font-size:18px; margin-bottom:5px;}
+.wel .style-1 span{ color: #ff0000;}
+.wel .style-2{ font-size:14px;}
+.wel .style-2 span{    color: #01AAED;}
+.tab-class{box-shadow:0 0 0; background: #fff;  border-radius:5px; border:1px solid #1AA094;}
+.tab-class-title{border-radius:5px 5px 0 0; background: #1AA094 !important; border-left:1px solid #1AA094;}
+.tab-class-title li{
+    color: #fff;}
+.tab-class-title .layui-this{ border-radius:5px 5px 0 0; }
+.class-info{ padding:15px;
+    border-radius:5px; background: #fff;}
+.icon{
+    width: 40px;
+    height:40px; border-radius:5px; text-align: center;
+    float: left; line-height:40px; color:#fff; }
+.icon i{ color:#fff; font-size:20px;}
+.icon img{
+    margin-top: 8px;}
+.iconbg1{ background:#fb8569;}
+.iconbg2{ background:#9ccd6d;}
+.iconbg3{ background:#68b4ff;}
+.iconbg4{ background:#efc416;}
+.title-name{
+    float: left; margin-left: 10px;}
+.title-name .style-1{ color: #666; font-size: 18px;}
+.title-name .style-2{ color: #999; font-size: 14px;}

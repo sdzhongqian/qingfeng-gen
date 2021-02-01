@@ -1,0 +1,16 @@
+@charset "utf-8";
+*{margin:0;padding:0;font-family:"微软雅黑",Helvetica,Arial,sans-serif;font-size:12px}
+a{text-decoration:none}
+html{width:100%;height:100%;overflow-x:hidden;overflow-y:auto}
+body{width:100%;min-height:100%}
+canvas{ display: block; margin: 0; width:100%; height:100%; position: fixed; left: 0; right: 0; top:0; bottom:0; z-index: -1; }
+.login-bg{background:url(../images/bg.jpg) no-repeat center;background-size:cover;overflow:hidden}
+.login{margin:120px auto 0 auto;min-height:420px;max-width:380px;padding:40px 20px;background-color:#fff;margin-left:auto;margin-right:auto;border-radius:4px;box-sizing:border-box}
+.login a.logo{display:block;height:58px;width:167px;margin:0 auto 30px auto;background-size:167px 42px}
+.login .message{margin:10px 0 0 -58px;padding:18px 10px 18px 60px;background:#189F92;position:relative;color:#fff;font-size:20px}
+.login #darkbannerwrap{width:18px;height:10px;margin:0 0 20px -58px;position:relative}
+.login input[type=email],.login input[type=file],.login input[type=password],.login input[type=text],select{border:1px solid #DCDEE0;vertical-align:middle;border-radius:3px;height:50px;padding:0 16px;font-size:14px;color:#555;outline:0;width:100%;box-sizing:border-box}
+.login input[type=email]:focus,.login input[type=file]:focus,.login input[type=password]:focus,.login input[type=text]:focus,select:focus{border:1px solid #27A9E3}
+.login input[type=button],.login input[type=submit]{display:inline-block;vertical-align:middle;padding:12px 24px;margin:0;font-size:18px;line-height:24px;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;color:#fff;background-color:#189F92;border-radius:3px;border:none;-webkit-appearance:none;outline:0;width:100%}
+.login hr.hr15{height:15px;border:none;margin:0;padding:0;width:100%}
+.login hr.hr20{height:20px;border:none;margin:0;padding:0;width:100%}

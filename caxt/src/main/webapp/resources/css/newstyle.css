@@ -1,0 +1,21 @@
+/**
+
+ layui官网
+ By 贤心
+
+*/
+
+
+/* 布局 */
+.layui-layout-admin .layui-side{ width:190px;}
+.layui-body{
+    left:190px;}
+.layui-nav-tree{width:190px;}
+.layui-nav .layui-nav-item a{
+    padding: 0 15px;}
+.layui-tab-title li{ font-size: 13px;}
+.admin-nav-card{
+    margin-top: 0;}
+.layui-btn-danger{    background-color: #ffb752;}
+.layui-btn-normal{background-color: #4fb1f2;}
+

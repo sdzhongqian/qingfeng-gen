@@ -1,0 +1,70 @@
+.x-nav {
+    padding: 0 20px;
+    position: relative;
+    z-index: 99;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 39px;
+    height: 39px;
+    overflow: hidden;
+}
+.layui-form-lab {
+    text-align: right !important;
+    padding: 9px 15px !important;
+}
+.page {
+    padding: 0px 20px !important;
+}
+.layui-input{height:30px;}
+
+.tag {
+    margin-left: 2px;
+    margin-right: 0px;
+}
+.label.label-info {
+    background-color: #1396b3;
+}
+.label {
+    padding: .2em .6em .3em;
+    line-height: 2;
+    color: #fff;
+    border-radius: .25em;
+}
+.bootstrap-tagsinput .tag [data-role='remove'] {
+    margin-left: 8px;
+    cursor: pointer;
+}
+.label-a{
+    cursor: pointer;
+}
+.label-icon{
+    padding: .6em .0em;
+    line-height: 2;
+    color: #fff;
+}
+.label-title{
+    height: 24px;
+    background: #1396b3;
+    color: #fff;
+    border-radius: .25em .25em 0 0;
+}
+.label-li{
+    line-height: 28px;
+    width: 32%;
+    margin: auto 2px;
+    float: left;
+    text-align: left;
+}
+
+.label-li1{
+    line-height: 28px;
+    width: 48%;
+    margin: auto 2px;
+    float: left;
+    text-align: left;
+}
+
+ .layui-select-disabled{
+
+     display: none;
+
+ }

@@ -1,0 +1,40 @@
+{
+  "name": "table-export",
+  "version": "1.0.0",
+  "description": "table export, support json、csv、txt、xml、word、excel、image、pdf",
+  "main": "src/index.js",
+  "scripts": {
+    "install": "napa eligrey/FileSaver.js blueimp/JavaScript-Canvas-to-Blob",
+    "dev": "webpack --watch",
+    "build": "webpack -p",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huanz/tableExport.git"
+  },
+  "keywords": [
+    "export",
+    "table",
+    "image",
+    "pdf",
+    "word",
+    "excel",
+    "doc",
+    "xls",
+    "csv",
+    "json",
+    "xml",
+    "txt"
+  ],
+  "author": "bukas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huanz/tableExport/issues"
+  },
+  "homepage": "https://github.com/huanz/tableExport#readme",
+  "devDependencies": {
+    "napa": "^2.3.0",
+    "webpack": "^1.12.14"
+  }
+}
